@@ -1,0 +1,51 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "plainvoice"
+version = "0.1.0"
+description = "Inspectable Chinese writing preferences with context-aware token steering"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{name = "PlainVoice contributors"}]
+dependencies = ["httpx>=0.28,<1"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Text Processing :: Linguistic",
+]
+
+[project.optional-dependencies]
+tokens = ["tiktoken>=0.9,<1"]
+local = ["torch>=2.4,<2.15", "transformers>=4.46,<5"]
+dev = ["pytest>=8,<10", "ruff>=0.11,<1", "build>=1.2,<2"]
+
+[project.scripts]
+plainvoice = "plainvoice.cli:main"
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux' or sys_platform == 'win32'" }]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/plainvoice"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "B", "UP"]

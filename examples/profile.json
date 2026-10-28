@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "name": "plain-zh-example",
+  "description": "减少重复使用的篇章提示语，不禁止正常表达。",
+  "max_bias": 1.5,
+  "rules": [
+    {"text": "需要特别说明的是", "bias": -0.8},
+    {"text": "从另一个层面来看", "bias": -0.6}
+  ]
+}
