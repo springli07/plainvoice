@@ -26,3 +26,19 @@ jobs:
       - run: uv run --no-sync pytest
       - run: uv build
       - run: uv run --no-sync plainvoice demo --json
+
+  local-cpu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --frozen --extra dev --extra tokens --extra local
+      - run: uv run --no-sync pytest
+        env:
+          HF_HUB_OFFLINE: "1"
+          TRANSFORMERS_OFFLINE: "1"
